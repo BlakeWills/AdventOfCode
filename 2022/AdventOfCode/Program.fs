@@ -1,9 +1,6 @@
 ﻿open System
 open System.IO
 
-
-printfn $"{Environment.CurrentDirectory}"
-
 let paths = [@"..\..\..\Data\01.txt"; @"Data\01.txt"]
 
 let path = 
