@@ -1,21 +1,12 @@
 module DayOne
 
-open System
 open System.IO
 
 let run = 
+    let calculateCalories (file:string) = 
+        use stream = new StreamReader (file)
 
-    let paths = [@"..\..\..\Data\01.txt"; @"Data\01.txt"]
-
-    let path = 
-        paths
-        |> List.filter (fun x -> File.Exists (Path.Combine (Environment.CurrentDirectory, x)))
-        |> List.head
-
-    let calculateCalories file = 
-        use stream = new StreamReader (path)
-
-        let mutable elfCalories = List.empty;
+        let mutable elfCalories = List.empty
         let mutable curCalories = 0
 
         let incCalories v =
@@ -23,7 +14,7 @@ let run =
             curCalories <- curCalories + cal
 
         let newElf () =
-            elfCalories <- List.append elfCalories [curCalories]
+            elfCalories <- curCalories :: elfCalories
             curCalories <- 0
 
         let mutable moreData = true
@@ -39,6 +30,6 @@ let run =
             |> List.skip (elfCalories.Length - 3)
             |> List.sum
 
-    let calories = calculateCalories path
+    let calories = calculateCalories (Helpers.getDataPath "01.txt")
     printfn $"Top three elves are carrying {calories} calories"
 
